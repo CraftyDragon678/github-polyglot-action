@@ -86,10 +86,15 @@ const updateGist = (content: string) => (
 );
 
 (async () => {
-  const repositories = await getRepositories();
-  const languages = await getAllLanguages(repositories);
-  const stat = getAllLanguageStat(languages);
-  const percent = toPercent(stat);
-  const percentSorted = sortRecord(percent);
-  updateGist(formatRecord(percentSorted));
+  try {
+    const repositories = await getRepositories();
+    const languages = await getAllLanguages(repositories);
+    const stat = getAllLanguageStat(languages);
+    const percent = toPercent(stat);
+    const percentSorted = sortRecord(percent);
+    updateGist(formatRecord(percentSorted));
+  } catch (e) {
+    console.error(e);
+    process.exit(-1);
+  }
 })();
