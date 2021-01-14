@@ -66,11 +66,19 @@ const sortRecord = (data: Record<string, number>) => (
   Object.entries(data).sort(([, a], [, b]) => b - a)
 );
 
+const formatRecord = (data: ReturnType<typeof sortRecord>, top = 10) => (
+  data
+    .slice(0, top)
+    .map(([language, percent]) => (
+      `${language.padEnd(18)}${percent.toFixed(1).padStart(4)}% ${''.padEnd(percent / 2, '■')}`
+    )).join('\n')
+);
+
 (async () => {
   const repositories = await getRepositories();
   const languages = await getAllLanguages(repositories);
   const stat = getAllLanguageStat(languages);
   const percent = toPercent(stat);
   const percentSorted = sortRecord(percent);
-  console.log(percentSorted);
+  console.log(formatRecord(percentSorted));
 })();
