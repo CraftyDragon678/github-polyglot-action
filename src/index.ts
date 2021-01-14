@@ -74,11 +74,22 @@ const formatRecord = (data: ReturnType<typeof sortRecord>, top = 10) => (
     )).join('\n')
 );
 
+const updateGist = (content: string) => (
+  octokit.request('PATCH /gists/{gist_id}', {
+    gist_id: process.env.GIST_ID,
+    files: {
+      code: {
+        content,
+      },
+    },
+  })
+);
+
 (async () => {
   const repositories = await getRepositories();
   const languages = await getAllLanguages(repositories);
   const stat = getAllLanguageStat(languages);
   const percent = toPercent(stat);
   const percentSorted = sortRecord(percent);
-  console.log(formatRecord(percentSorted));
+  updateGist(formatRecord(percentSorted));
 })();
