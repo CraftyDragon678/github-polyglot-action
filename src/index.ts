@@ -90,13 +90,17 @@ const updateGist = (content: string) => (
     const repositories = await getRepositories();
     const languages = await getAllLanguages(repositories);
     const stat = getAllLanguageStat(languages);
+    const filteredStat = Object.fromEntries(Object.entries(stat).filter(([language]) => (
+      !(process.env.IGNORE_LANGUAGES?.split('/') || []).includes(language)
+    )));
     // console.log(
     //   languages.map((l, idx) => [l['Jupyter Notebook'], repositories[idx].join('/')] as const)
     //     .filter(([l]) => l),
     // );
-    const percent = toPercent(stat);
+    const percent = toPercent(filteredStat);
     const percentSorted = sortRecord(percent);
-    updateGist(formatRecord(percentSorted, Infinity));
+    // updateGist(formatRecord(percentSorted, Infinity));
+    console.log(formatRecord(percentSorted, Infinity));
   } catch (e) {
     console.error(e);
     process.exit(-1);
