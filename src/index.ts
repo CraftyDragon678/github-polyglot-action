@@ -90,6 +90,10 @@ const updateGist = (content: string) => (
     const repositories = await getRepositories();
     const languages = await getAllLanguages(repositories);
     const stat = getAllLanguageStat(languages);
+    // console.log(
+    //   languages.map((l, idx) => [l['Jupyter Notebook'], repositories[idx].join('/')] as const)
+    //     .filter(([l]) => l),
+    // );
     const percent = toPercent(stat);
     const percentSorted = sortRecord(percent);
     updateGist(formatRecord(percentSorted));
