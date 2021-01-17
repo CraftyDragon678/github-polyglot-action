@@ -96,7 +96,7 @@ const updateGist = (content: string) => (
     // );
     const percent = toPercent(stat);
     const percentSorted = sortRecord(percent);
-    updateGist(formatRecord(percentSorted));
+    updateGist(formatRecord(percentSorted, Infinity));
   } catch (e) {
     console.error(e);
     process.exit(-1);
