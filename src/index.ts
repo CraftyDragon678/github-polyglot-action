@@ -48,7 +48,7 @@ const getMainLanguageStat = (data: ThenArg<ReturnType<typeof getAllLanguages>>) 
     .reduce((prev, curr) => ({
       ...prev,
       [curr]: (prev[curr] || 0) + 1,
-    }), {})
+    }), {} as { [key: string]: number })
 );
 
 const toPercent = (data: Record<string, number>) => {
@@ -76,7 +76,7 @@ const formatRecord = (data: ReturnType<typeof sortRecord>, top = 10) => (
 
 const updateGist = (content: string) => (
   octokit.request('PATCH /gists/{gist_id}', {
-    gist_id: process.env.GIST_ID,
+    gist_id: process.env.GIST_ID || '',
     files: {
       code: {
         content,
