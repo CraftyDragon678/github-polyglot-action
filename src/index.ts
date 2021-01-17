@@ -34,7 +34,7 @@ const getAllLanguageStat = (data: ThenArg<ReturnType<typeof getAllLanguages>>) =
     ...prevData,
     ...(Object.keys(curr).reduce((prev, key) => ({
       ...prev,
-      [key]: prev[key] ? prev[key] + curr[key] : curr[key],
+      [key]: prevData[key] ? prevData[key] + curr[key] : curr[key],
     }), {})),
   }))
 );
